@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Customer Login Page{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Login</h2>
+        
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-warning">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="form-group mb-3">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+
+        <div class="form-group mb-3 mt-3">
+            <p>Don't have an account? <a href="{{ url_for('custreg') }}">Register here</a></p> 
+        </div>
+
+        <div class="form-group mb-3">
+            <p>Are you a service professional? <a href="{{ url_for('profreg') }}">Register as a professional</a></p> 
+        </div>
+    </div>
+{% endblock %}

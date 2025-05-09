@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %} Approve Professionals {% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approve Professionals</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h1 {
+            text-align: center;
+        }
+        .action-buttons a {
+            text-decoration: none;
+            padding: 5px 10px;
+            margin: 0 5px;
+            color: white;
+            border-radius: 5px;
+        }
+        .approve-button {
+            background-color: #007bff;
+        }
+        .reject-button {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>Approve Professionals</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Adhaar Card</th>
+                <th>Past Experience</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if prof %}
+                {% for item in prof %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.phone }}</td>
+                    <td>{{ item.adhaarcard }}</td>
+                    <td>{{ item.past_exp }}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <a href="{{ url_for('approve_professional', id=item.id) }}" class="approve-button">Approve</a>
+                            <a href="{{ url_for('reject_professional', id=item.id) }}" class="reject-button">Reject</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6" style="text-align: center;">No Professionals To Display</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+{% endblock %}

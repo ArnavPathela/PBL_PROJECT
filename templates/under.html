@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %} Under Scrutinity {% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Scrutiny</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .message {
+            font-size: 1.5em;
+            color: #dc3545;  
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Profile is Under Scrutiny</h1>
+    <p class="message">Your registration is still under review by the admin. Please wait until your approval is confirmed.</p>
+    <p>If you have any questions, contact support.</p>
+</body>
+</html>
+
+{% endblock %}

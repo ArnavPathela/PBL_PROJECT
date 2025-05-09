@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid m-3">
+    <h1>Welcome to Admin Dashboard</h1>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <a href="{{ url_for('addservice') }}" class="card text-center" style="height: 150px; width: 100%;">
+                <div class="card-body d-flex align-items-center justify-content-center" style="height: 100%;">
+                    <h5 class="card-title">Add Service</h5>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{{ url_for('viewser') }}" class="card text-center" style="height: 150px; width: 100%;">
+                <div class="card-body d-flex align-items-center justify-content-center" style="height: 100%;">
+                    <h5 class="card-title">View Services</h5>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{{url_for('assignserviceform')}}" class="card text-center" style="height: 150px; width: 100%;">
+                <div class="card-body d-flex align-items-center justify-content-center" style="height: 100%;">
+                    <h5 class="card-title">Manage Users</h5>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{{url_for('viewprof')}}" class="card text-center" style="height: 150px; width: 100%;">
+                <div class="card-body d-flex align-items-center justify-content-center" style="height: 100%;">
+                    <h5 class="card-title">Manage Professionals</h5>
+                </div>
+                </a>
+    </div>
+    <div class="col-md-4 mb-3">
+        <a href="{{url_for('approve_professionals')}}" class="card text-center" style="height: 150px; width: 100%;">
+            <div class="card-body d-flex align-items-center justify-content-center" style="height: 100%;">
+                <h5 class="card-title">Approve Profesionals</h5>
+            </div>
+            </a>
+</div>
+</div>
+{% endblock %}
+

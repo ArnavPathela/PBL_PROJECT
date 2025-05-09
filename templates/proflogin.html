@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Professional Login Page{% endblock %}
+
+{% block content %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+   
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+
+    <div>
+        <h2>Professional Login</h2>
+        <form method="POST">
+            <div>
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+
+            <div class="form-group mb-3">
+                <p class="mt-3">Don't have an account? <a href="{{ url_for('profreg') }}">Register here as a Professional</a></p> 
+            </div>
+
+            <div class="form-group mb-3">
+                <p class="mt-3">Not a professional? <a href="{{ url_for('custreg') }}">Register as a Customer</a></p> 
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+
+{% endblock %}

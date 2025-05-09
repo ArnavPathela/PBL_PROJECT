@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Professional Registration Page{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <h2>Professional Registration</h2>
+    <form action="{{ url_for('profreg') }}" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="exampleInputName" class="form-label">Name</label>
+            <input name="name" type="text" class="form-control" id="exampleInputName" required>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="exampleInputPassword" class="form-label">Password</label>
+            <input name="password" type="password" class="form-control" id="exampleInputPassword" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputUsername" class="form-label">Username</label>
+            <input name="username" type="text" class="form-control" id="exampleInputUsername" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPhone" class="form-label">Phone No</label>
+            <input name="phone" type="tel" class="form-control" id="exampleInputPhone" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputAddress" class="form-label">Address</label>
+            <input name="address" type="text" class="form-control" id="exampleInputAddress" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail" class="form-label">Email</label>
+            <input name="email" type="email" class="form-control" id="exampleInputEmail" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputExperience" class="form-label">Past Experience</label>
+            <input name="past_exp" type="text" class="form-control" id="exampleInputExperience" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputAdhaar" class="form-label">Aadhaar Card No</label>
+            <input name="adhaarcard" type="number" class="form-control" id="exampleInputAdhaar" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %} Manage Professionals {% endblock %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Professionals</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h1 {
+            text-align: center;
+        }
+        .action-buttons a {
+            text-decoration: none;
+            padding: 5px 10px;
+            margin: 0 5px;
+            color: white;
+            border-radius: 5px;
+        }
+        .block-button {
+            background-color: #dc3545; /* Red color for blocking */
+        }
+    </style>
+</head>
+<body>
+    <h1>Manage Professionals</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in prof %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.phone }}</td>
+                <td>{{ item.role }}</td>
+                <td class="action-buttons">
+                    <!-- Block button -->
+                    <form action="/block/{{ item.id }}" method="POST" style="display:inline;">
+                        <button type="submit" class="block-button">Block</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" style="text-align: center;">No Professionals Found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+{% endblock %}

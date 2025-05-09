@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Customer Registration Page{% endblock %}
+
+{% block content %}
+
+<form action='/custreg' method='POST'>
+    <h2>Customer Registration</h2>
+    <div class="mb-3">
+        <label for="exampleInputName" class="form-label">Name</label>
+        <input name='name' type="text" class="form-control" id="exampleInputName" required>
+    </div>¸
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input name='password' type="password" class="form-control" id="exampleInputPassword1" required>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputUsername" class="form-label">Username</label>
+        <input name='username' type="text" class="form-control" id="exampleInputUsername" required>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPhone" class="form-label">Phone No</label>
+        <input name='phone_no' type="tel" class="form-control" id="exampleInputPhoneNum" required>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputAddress" class="form-label">Address</label>
+        <input name='address' type="text" class="form-control" id="exampleInputAddress" required>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email</label>
+        <input name='email' type="email" class="form-control" id="exampleInputEmail1" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}

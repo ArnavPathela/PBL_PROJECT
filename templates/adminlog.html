@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Login Page{% endblock %}
+
+{% block content %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+   
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+
+    <div>
+        <h2>Admin Login</h2>
+        <form method="POST">
+            <div>
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+
+        </form>
+    </div>
+</body>
+</html>
+
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Book a Service</h1>
+    
+    <form method="GET" action="{{ url_for('search_service') }}">
+        <label for="service_name">Search for a Service:</label>
+        <input type="text" id="service_name" name="service_name" placeholder="Enter service name" required>
+        <button type="submit">Search</button>
+    </form>
+  
+    {% if professionals %}
+        <h2>Professionals Offering {{ service_name }}</h2>
+        <ul>
+            {% for professional in professionals %}
+                <li>
+                    {{ professional.name }} - {{ professional.phone }} - {{ professional.email }}
+                    <form method="POST" action="{{ url_for('book_professional', professional_id=professional.id) }}" style="display: inline;">
+                        <button type="submit">Book This Professional</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% elif service_searched %}
+        <p>No professionals found for the service "{{ service_name }}".</p>
+    {% endif %}
+{% endblock %}

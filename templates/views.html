@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %} View Services {% endblock %}
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Services</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h1 {
+            text-align: center;
+        }
+        .action-buttons a {
+            text-decoration: none;
+            padding: 5px 10px;
+            margin: 0 5px;
+            color: white;
+            border-radius: 5px;
+        }
+        .edit-button {
+            background-color: #007bff;
+        }
+        .delete-button {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>Existing Services</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Service Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in service %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.description }}</td>
+                <td>${{ item.price }}</td>
+                <td class="action-buttons">
+                    <a href="/edit/{{ item.id }}" class="edit-button">Edit</a>
+                    <a href="/delete/{{ item.id }}" class="delete-button">Delete</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" style="text-align: center;">No services found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+
+{% endblock %}

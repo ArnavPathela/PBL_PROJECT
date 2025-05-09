@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>My Bookings</h1>
+
+    {% if open_bookings or closed_bookings %}
+        
+        <h2>Open Bookings</h2>
+        {% if open_bookings %}
+            <ul>
+                {% for booking in open_bookings %}
+                    <li>
+                        <strong>{{ booking.professional_name }}</strong> - {{ booking.service_name }}<br>
+                        Booked on: {{ booking.booking_date }}<br>
+                        Status: {{ booking.status }}<br>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No open bookings.</p>
+        {% endif %}
+
+        <h2>Closed Bookings</h2>
+        {% if closed_bookings %}
+            <ul>
+                {% for booking in closed_bookings %}
+                    <li>
+                        <strong>{{ booking.professional_name }}</strong> - {{ booking.service_name }}<br>
+                        Completed on: {{ booking.completion_date }}<br>
+                        Status: {{ booking.status }}<br>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No closed bookings.</p>
+        {% endif %}
+    {% else %}
+        <p>You have no bookings yet.</p>
+    {% endif %}
+{% endblock %}
