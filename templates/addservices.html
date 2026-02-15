@@ -1,29 +1,105 @@
 {% extends 'base.html' %}
 
-{% block title %}Add Services{% endblock %}
+{% block title %}Add Service{% endblock %}
 
 {% block content %}
-<div class="container-fluid row justify-content-center mt-3">
-    <div class="col-6">
-        <h1 class="text-center">Add Service</h1>
-        <form action="{{ url_for('addservice') }}" method="post">
-            <div class="form-group mb-3">
-                <label for="name" class="form-label">Category Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-            
-            <div class="form-group mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
-            </div>
-            <div class="form-group mb-3">
-                <label for="price" class="form-label">Price</label>
-                <input type="number" class="form-control" id="price" name="price" required>
-            </div>
-            <div class="form-group mb-3">
-                <button type="submit" class="btn btn-primary">Add</button>
-            </div>
-        </form>   
-    </div>
+<style>
+    body {
+        background-color: #f4f6f8;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .form-container {
+        max-width: 550px;
+        margin: 60px auto;
+        background-color: #fff;
+        padding: 40px 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        animation: fadeInUp 0.4s ease;
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-container h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: 600;
+        color: #2b6cb0;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: 500;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus {
+        border-color: #2b6cb0;
+        outline: none;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    button {
+        background-color: #2b6cb0;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 100%;
+        font-weight: 500;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #24569b;
+    }
+</style>
+
+<div class="form-container">
+    <h2>Add Service</h2>
+    <form method="POST">
+        <div class="form-group">
+            <label for="name">Category Name</label>
+            <input type="text" name="name" id="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea name="description" id="desc" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="text" name="price" id="price" required>
+        </div>
+
+        <button type="submit">Add</button>
+    </form>
 </div>
 {% endblock %}
+

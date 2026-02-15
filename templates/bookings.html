@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block title %}My Bookings{% endblock %}
+
+{% block content %}
+
+<style>
+    .booking-container {
+        max-width: 900px;
+        margin: 60px auto;
+        background: #ffffff;
+        padding: 24px 32px;
+        border-radius: 12px;
+        box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        animation: fadeUp 0.6s ease-out;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(14px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .booking-container h2 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 28px;
+        font-weight: 600;
+        color: #1e293b;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 0 1px #e2e8f0;
+    }
+
+    thead {
+        background: #f1f5f9;
+    }
+
+    th, td {
+        padding: 12px 14px;
+        font-size: 15px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    th {
+        text-align: left;
+        color: #334155;
+        font-weight: 600;
+    }
+
+    tr:hover td {
+        background: #f8fafc;
+    }
+
+    .status-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .status-open {
+        background: #e0f2fe;
+        color: #0369a1;
+    }
+
+    .status-complete {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .empty-message {
+        padding: 20px;
+        font-size: 16px;
+        background: #f8fafc;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+        color: #64748b;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    @media (max-width: 700px) {
+        .booking-container {
+            padding: 20px;
+        }
+
+        table, thead, tbody, th, td, tr {
+            display: block;
+        }
+
+        th {
+            display: none;
+        }
+
+        tr {
+            margin-bottom: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        td {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 10px;
+            border: none;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        td:last-child {
+            border-bottom: none;
+        }
+
+        td:before {
+            content: attr(data-label);
+            font-weight: 600;
+            color: #475569;
+        }
+    }
+</style>
+
+<div class="booking-container">
+    <h2>My Bookings</h2>
+
+    {% if bookings %}
+    <table>
+        <thead>
+            <tr>
+                <th>Service</th>
+                <th>Professional</th>
+                <th>Status</th>
+                <th>Completion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for b in bookings %}
+            <tr>
+                <td data-label="Service">{{ b.service_name }}</td>
+                <td data-label="Professional">{{ b.professional.name }}</td>
+                <td data-label="Status">
+                    {% if b.status == 'open' %}
+                        <span class="status-pill status-open">Open</span>
+                    {% else %}
+                        <span class="status-pill status-complete">Completed</span>
+                    {% endif %}
+                </td>
+                <td data-label="Completion">
+                    {{ b.completion_date or 'Pending' }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-message">No bookings yet.</div>
+    {% endif %}
+</div>
+
+{% endblock %}

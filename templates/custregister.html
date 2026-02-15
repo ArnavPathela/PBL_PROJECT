@@ -1,37 +1,130 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Registration</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-{% block title %}Customer Registration Page{% endblock %}
+        .register-container {
+            max-width: 500px;
+            margin: 100px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(50px);
+        }
 
-{% block content %}
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
 
-<form action='/custreg' method='POST'>
-    <h2>Customer Registration</h2>
-    <div class="mb-3">
-        <label for="exampleInputName" class="form-label">Name</label>
-        <input name='name' type="text" class="form-control" id="exampleInputName" required>
-    </div>¸
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input name='password' type="password" class="form-control" id="exampleInputPassword1" required>
-    </div>
-    <div class="mb-3">
-        <label for="exampleInputUsername" class="form-label">Username</label>
-        <input name='username' type="text" class="form-control" id="exampleInputUsername" required>
-    </div>
-    <div class="mb-3">
-        <label for="exampleInputPhone" class="form-label">Phone No</label>
-        <input name='phone_no' type="tel" class="form-control" id="exampleInputPhoneNum" required>
-    </div>
-    <div class="mb-3">
-        <label for="exampleInputAddress" class="form-label">Address</label>
-        <input name='address' type="text" class="form-control" id="exampleInputAddress" required>
-    </div>
-    <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email</label>
-        <input name='email' type="email" class="form-control" id="exampleInputEmail1" required>
-    </div>
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #444;
+        }
 
-{% endblock %}
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 18px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 18px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #48bb78;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2f855a;
+        }
+
+        .links {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .links a {
+            color: #2b6cb0;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Customer Registration</h2>
+        <form method="POST" action="/custreg">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" required>
+
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required>
+
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" required>
+
+            <label for="phone">Phone No</label>
+            <input type="tel" name="phone" id="phone" required>
+
+            <label for="address">Address</label>
+            <textarea name="address" id="address" rows="2" required></textarea>
+
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required>
+
+            <button type="submit">Register</button>
+
+            <div class="links">
+                <p>Already have an account? <a href="/custlogin">Login here</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

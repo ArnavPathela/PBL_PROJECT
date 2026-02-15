@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Bookings</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.12);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #111827;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+
+        th {
+            background: #f9fafb;
+            text-align: left;
+        }
+
+        tr:hover {
+            background: #f1f5f9;
+        }
+
+        .status-open {
+            color: #b45309;
+            font-weight: bold;
+        }
+        .status-completed {
+            color: #15803d;
+            font-weight: bold;
+        }
+
+        .btn-complete {
+            background: #10b981;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-complete:hover {
+            background: #059669;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Your Bookings</h1>
+
+    {% if bookings %}
+        <table>
+            <tr>
+                <th>Booking ID</th>
+                <th>User</th>
+                <th>Service</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+            {% for b in bookings %}
+            <tr>
+                <td>{{ b.id }}</td>
+                <td>{{ b.user.name }}</td>
+                <td>{{ b.service_name }}</td>
+                <td>
+                    {% if b.status == "open" %}
+                        <span class="status-open">Open</span>
+                    {% else %}
+                        <span class="status-completed">Completed</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if b.status == "open" %}
+                    <form method="POST" action="{{ url_for('complete_booking', booking_id=b.id) }}">
+                        <button type="submit" class="btn-complete">Mark Complete</button>
+                    </form>
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No bookings found.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>
+
+{% endblock %}

@@ -3,29 +3,76 @@
 {% block title %}Professional Dashboard{% endblock %}
 
 {% block content %}
-<div class="container-fluid m-3">
-    <h1>Professional Dashboard</h1>
-    <div class="row">
-        <div class="col-md-4 mb-3">
-            <a href="#" class="card text-center" style="height: 150px; width: 100%;">
-                <div class="card-body d-flex align-items-center justify-content-center" style="height: 100%;">
-                    <h5 class="card-title">Upcoming Services</h5>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-4 mb-3">
-            <a href="#" class="card text-center" style="height: 150px; width: 100%;">
-                <div class="card-body d-flex align-items-center justify-content-center" style="height: 100%;">
-                    <h5 class="card-title">Past Services </h5>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-4 mb-3">
-            <a href="#" class="card text-center" style="height: 150px; width: 100%;">
-                <div class="card-body d-flex align-items-center justify-content-center" style="height: 100%;">
-                    <h5 class="card-title">Provide Feedback</h5>
-                </div>
-            </a>
-        </div>
+<style>
+    body {
+        background-color: #f4f6f8;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .dash-container {
+        max-width: 1000px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+        text-align: center;
+        font-weight: 600;
+        color: #2b6cb0;
+        margin-bottom: 40px;
+    }
+
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 25px;
+    }
+
+    .card-link {
+        text-decoration: none;
+    }
+
+    .card-box {
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 40px 20px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 18px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+        transition: all 0.25s ease;
+        color: #2d3748;
+        border: 1px solid #e2e8f0;
+    }
+
+    .card-box:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        background-color: #f7fafc;
+    }
+</style>
+
+<div class="dash-container">
+    <h2>Professional Dashboard</h2>
+    <div class="card-grid">
+        <a href="{{ url_for('professional_bookings') }}" class="card-link">
+            <div class="card-box">Upcoming Services</div>
+        </a>
+        <a href="{{ url_for('professional_pastservices') }}" class="card-link">
+            <div class="card-box">Past Services</div>
+        </a>
+        <a href="#" class="card-link">
+            <div class="card-box">Provide Feedback</div>
+        </a>
+    </div>
 </div>
 {% endblock %}

@@ -1,15 +1,93 @@
-{% extends 'base.html' %}
-{% block content %} 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1> {{ login }} </h1>
-            <p> {{ hello }} </p>
-            
-          
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HouseHold Services</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000; /* black background */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
+        .welcome-container {
+            max-width: 500px;
+            margin: 100px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            text-align: center;
+
+            /* Animation */
+            transform: translateY(100px);
+            opacity: 0;
+            animation: slideUpFadeIn 1s ease-out forwards;
+        }
+
+        @keyframes slideUpFadeIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .welcome-container h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .welcome-container p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .button-group {
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            margin: 5px 10px;
+            font-size: 15px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-btn {
+            background-color: #2b6cb0;
+            color: white;
+        }
+
+        .login-btn:hover {
+            background-color: #1a4f80;
+        }
+
+        .register-btn {
+            background-color: #48bb78;
+            color: white;
+        }
+
+        .register-btn:hover {
+            background-color: #2f855a;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <h2>Hello! Welcome to HouseHold Services App.</h2>
+        <p>Please login/register to continue.</p>
+
+        <div class="button-group">
+            <a href="/custlogin" class="btn login-btn">Login</a>
+            <a href="/custreg" class="btn register-btn">Register</a>
         </div>
     </div>
-</div>
-{% endblock %}
-            
+</body>
+</html>
+  

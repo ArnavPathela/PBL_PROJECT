@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Past Services</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.12);
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #111827;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+        th {
+            background: #f9fafb;
+            text-align: left;
+        }
+        tr:hover {
+            background: #f1f5f9;
+        }
+        .status-completed {
+            color: #15803d;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Past Services</h1>
+
+    {% if bookings %}
+        <table>
+            <tr>
+                <th>Booking ID</th>
+                <th>User</th>
+                <th>Service</th>
+                <th>Status</th>
+                <th>Completed On</th>
+            </tr>
+
+            {% for b in bookings %}
+            <tr>
+                <td>{{ b.id }}</td>
+                <td>{{ b.user.name }}</td>
+                <td>{{ b.service_name }}</td>
+                <td><span class="status-completed">{{ b.status|capitalize }}</span></td>
+                <td>
+                    {% if b.completion_date %}
+                        {{ b.completion_date.strftime('%d-%m-%Y %H:%M') }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No past services found.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

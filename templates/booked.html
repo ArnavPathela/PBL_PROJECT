@@ -1,40 +1,79 @@
 {% extends 'base.html' %}
 
+{% block title %}My Bookings{% endblock %}
+
 {% block content %}
-    <h1>My Bookings</h1>
+<style>
+    body {
+        background-color: #f4f4f4;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-    {% if open_bookings or closed_bookings %}
-        
-        <h2>Open Bookings</h2>
-        {% if open_bookings %}
-            <ul>
-                {% for booking in open_bookings %}
-                    <li>
-                        <strong>{{ booking.professional_name }}</strong> - {{ booking.service_name }}<br>
-                        Booked on: {{ booking.booking_date }}<br>
-                        Status: {{ booking.status }}<br>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No open bookings.</p>
-        {% endif %}
+    .container-bookings {
+        max-width: 900px;
+        margin: 60px auto;
+        padding: 30px;
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        animation: fadeIn 0.5s ease-in-out;
+    }
 
-        <h2>Closed Bookings</h2>
-        {% if closed_bookings %}
-            <ul>
-                {% for booking in closed_bookings %}
-                    <li>
-                        <strong>{{ booking.professional_name }}</strong> - {{ booking.service_name }}<br>
-                        Completed on: {{ booking.completion_date }}<br>
-                        Status: {{ booking.status }}<br>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No closed bookings.</p>
-        {% endif %}
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+        text-align: center;
+        color: #2b6cb0;
+        margin-bottom: 30px;
+    }
+
+    .no-bookings {
+        text-align: center;
+        font-size: 18px;
+        color: #666;
+        padding: 30px 0;
+    }
+
+    /* Future use: style for service cards */
+    .booking-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        background-color: #fafafa;
+    }
+
+    .booking-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .booking-details {
+        font-size: 14px;
+        color: #555;
+    }
+</style>
+
+<div class="container-bookings">
+    <h2>My Bookings</h2>
+
+    {% if bookings and bookings|length > 0 %}
+        {% for booking in bookings %}
+        <div class="booking-card">
+            <div class="booking-title">{{ booking.service_name }}</div>
+            <div class="booking-details">
+                Date: {{ booking.date }}<br>
+                Time: {{ booking.time }}<br>
+                Status: {{ booking.status }}
+            </div>
+        </div>
+        {% endfor %}
     {% else %}
-        <p>You have no bookings yet.</p>
+        <div class="no-bookings">You have no bookings yet.</div>
     {% endif %}
+</div>
 {% endblock %}
