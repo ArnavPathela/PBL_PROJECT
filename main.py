@@ -42,4 +42,4 @@ from applications.route import *
 if __name__ == '__main__':
 
     # Run the Flask application
-    app.run(debug=True, use_reloader=False)  # use_reloader=False to avoid the issue with reloading in development mode
+    app.run(debug=True, use_reloader=False)  
