@@ -6,7 +6,7 @@ from applications.model import *
 
 
 
-@app.route('/home')
+@app.route('/')
 def home():
     if session.get('role') == 'customer':
         username = session.get('username')
@@ -31,7 +31,7 @@ def home():
     elif session.get('role') == 'admin':
         return redirect(url_for('admindash'))
     
-    return render_template('index.html', hello="Hello Guest, Please Sign in/Sign Up") 
+    return render_template('index.html', hello_message="Hello! Welcome to HouseHold Services App. Please login/register to continue.")
 
     
 
@@ -46,35 +46,21 @@ def login():
         email = request.form.get('email', None)
         password = request.form.get('password', None)
 
-        # Debugging: Log received data
-        print(f"Received email: {email}")
-        print(f"Received password: {password}")
-
-        if not email:
-            flash('Email is required')
-            print("Missing email")
-            return redirect(url_for('login'))
-        if not password:
-            flash('Password is required')
-            print("Missing password")
-            return redirect(url_for('login'))
-        
         user = User.query.filter_by(email=email).first()
         if not user:
             flash('Invalid email')
-            print("Invalid email: User not found")
             return redirect(url_for('login'))
-        
+
         if user.password == password:
             session['email'] = user.email
-            session['username'] = user.username  
-            session['role'] = user.role  
+            session['username'] = user.username
+            session['role'] = user.role
+            session['user_id'] = user.id   # <<< IMPORTANT LINE
+
             flash('Login Successfully')
-            print("Login successful")
             return redirect(url_for('home'))
         else:
             flash('Invalid password')
-            print("Invalid password")
             return redirect(url_for('login'))
 
         
@@ -248,9 +234,19 @@ def customerdash():
 def professionaldash():
     return render_template('professionaldash.html')
 
-@app.route('/bookservice')
+@app.route('/bookservice', methods=['GET', 'POST'])
 def bookservice():
-    return render_template('bookservice.html')
+    if request.method == "POST":
+        q = request.form.get("servicename", "").strip()
+        if q:
+            services = Service.query.filter(Service.name.ilike(f"%{q}%")).all()
+        else:
+            services = Service.query.all()
+    else:
+        services = Service.query.all()
+
+    return render_template('bookservice.html', services=services)
+
 
 
 @app.route('/bookedservice')
@@ -303,7 +299,8 @@ def assign_service():
 @app.route("/profreg", methods=['GET', 'POST'])
 def profreg():
     if request.method == 'GET':
-        return render_template('profregister.html')
+        services = Service.query.all()
+        return render_template('profregister.html', services=services)
     
     if request.method == 'POST':
         
@@ -311,50 +308,36 @@ def profreg():
         email = request.form.get('email')
         password = request.form.get('password')
         phone = request.form.get('phone')
-        adhaarcard = request.form.get('adhaarcard')
-        past_exp = request.form.get('past_exp')
+        adhaarcard = request.form.get('aadhaar')
+        past_exp = request.form.get('experience')
+        service_id = request.form.get('service_id')
 
-        
-        if not name:
-            flash('Name is required')
-            return redirect(url_for('profreg'))
-        if not email:
-            flash('Email is required')
-            return redirect(url_for('profreg'))
-        pro = Professional.query.filter_by(email=email).first()
-        if pro:
-            flash('Email already exists')
-            return redirect(url_for('proflogin'))
-        if not password:
-            flash('Password is required')
+        # Validations...
+        if not name or not email or not password:
+            flash("All required fields must be filled")
             return redirect(url_for('profreg'))
 
-        
-        if adhaarcard and not adhaarcard.isdigit():
-            flash('Adhaar Card must contain only numbers')
-            return redirect(url_for('profreg'))
-
-        
         pro = Professional(
             name=name,
             email=email,
             password=password,
             phone=phone,
             adhaarcard=int(adhaarcard) if adhaarcard else None,
-            past_exp=past_exp
+            past_exp=past_exp,
+            service_id=service_id
         )
 
-        
         try:
             db.session.add(pro)
             db.session.commit()
-            flash('User created successfully')
+            flash('Professional registered successfully')
             return redirect(url_for('proflogin'))
         except Exception as e:
             db.session.rollback()
             flash('An error occurred while saving the data')
             print("Error:", e)
             return redirect(url_for('profreg'))
+
 
     
 
@@ -522,15 +505,47 @@ def book_professional(professional_id):
 
 
 
-@app.route('/my-bookings')
+@app.route('/bookings')
 def my_bookings():
-    user_id = session.get('user_id')  # Get user ID from session
-    
-    if user_id is None:
-        flash("Please log in to view your bookings.", "error")
-        return redirect(url_for('login'))  # Redirect to login page if no user_id in session
-    
-    open_bookings = Booking.query.filter_by(user_id=user_id, status="open").all()
-    closed_bookings = Booking.query.filter_by(user_id=user_id, status="closed").all()
-    
-    return render_template('bookings.html', open_bookings=open_bookings, closed_bookings=closed_bookings)
+    user_id = session.get('user_id')
+    if not user_id:
+        flash("Login required", "warning")
+        return redirect(url_for('login'))
+
+    bookings = Booking.query.filter_by(user_id=user_id).all()
+    return render_template("bookings.html", bookings=bookings)
+
+@app.route('/confirmbooking/<int:service_id>', methods=['GET', 'POST'])
+def confirmbooking(service_id):
+    service = Service.query.get_or_404(service_id)
+
+    professionals = Professional.query.filter_by(service_id=service_id).all()
+
+    if request.method == 'POST':
+        professional_id = request.form.get('professional_id')
+        if not professional_id:
+            flash("No professional selected!", "error")
+            return redirect(request.url)
+
+        # you must have a logged-in user for user_id
+        user_id = session.get('user_id')   # CHANGE THIS depending on your auth system
+
+        booking = Booking(
+            user_id=user_id,
+            professional_id=professional_id,
+            service_name=service.name,   # IMPORTANT: matches your schema
+        )
+        db.session.add(booking)
+        db.session.commit()
+
+        flash("Booking successful!", "success")
+        return redirect(url_for('my_bookings'))   # adjust if route is different
+
+    return render_template(
+        "confirmbooking.html",
+        service=service,
+        professionals=professionals
+    )
+
+
+
